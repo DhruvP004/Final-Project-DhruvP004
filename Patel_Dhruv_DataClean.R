@@ -123,17 +123,14 @@ omr_wider
 # First step is need to change the character variables to numerical variables so
 # I can do mathematical operations like mean()
 
-# utate(variablename = as.double/numeric())
+
+
 omr_patient <- omr_wider |> 
   group_by(subject_id) |> 
-  summarize("subject_id" = `subject_id`, 
-            "chartdate" = `chartdate`,
-            "Diastolic Blood Pressure" = mean(`Systolic Blood Pressure`, na.rm = TRUE),
-            "Systolic Blood Pressure" = mean(`Diastolic Blood Pressure`, na.rm = TRUE),
-            "Weight (Lbs)" = mean(`Weight (Lbs)`, na.rm = TRUE),
-            "Height (Inches)" = mean(`Height (Inches)`, na.rm = TRUE),
-            "BMI (kg/m2)" = mean(`BMI (kg/m2)`, na.rm = TRUE)
-            )
+  mutate("Diastolic Blood Pressure" = as.numeric("Diastolic Blood Pressure"),
+         "Systolic Blood Pressure")
+omr_patient
+
 print(omr_patient)
 
 admissions
