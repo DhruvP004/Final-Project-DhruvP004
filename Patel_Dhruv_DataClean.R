@@ -11,14 +11,6 @@ library(naniar)
 admissions <- read_csv("data/admissions.csv")
 admissions
 
-# Read in icd
-icd <- read_csv("data/d_icd_diagnoses.csv")
-icd
-
-# Read in diagnoses
-diagnoses <- read_csv("data/diagnoses_icd.csv")
-diagnoses
-
 # Read in omr
 omr <- read_csv("data/omr.csv")
 omr
@@ -39,14 +31,6 @@ admissions |>
 # subject_id is not a unique variable for each observation
 # running this gives 257,356 rows. When admissions is 524,520 rows
 # assuming this is from readmissions
-
-# Missing variable summary for icd
-# None missing
-miss_var_summary(icd)
-
-# Missing variable summary for diagnoses
-# None missing
-miss_var_summary(diagnoses)
 
 # Missing variable summary for omr
 # None missing
@@ -120,19 +104,23 @@ omr_wider
 # chronic diseases or overall health state since patients who are chronically ill
 # or chronically sick typcially have lower vitals.
 
-# First step is need to change the character variables to numerical variables so
-# I can do mathematical operations like mean()
-
-
+omr_wider
 
 omr_patient <- omr_wider |> 
+  na.omit() |> 
+  mutate(Systolic_BP = as.numeric(`Systolic Blood Pressure`),
+         Diastolic_BP = as.numeric(`Diastolic Blood Pressure`),
+         Weight_Lbs = as.numeric(`Weight (Lbs)`),
+         Height_Inches = as.numeric(`Height (Inches)`),
+         BMI_kgm2 = as.numeric(`BMI (kg/m2)`)
+  ) |> 
   group_by(subject_id) |> 
-  mutate("Diastolic Blood Pressure" = as.numeric("Diastolic Blood Pressure"),
-         "Systolic Blood Pressure")
+  summarize(Systolic_BP = mean(Systolic_BP),
+            Diastolic_BP = mean(Diastolic_BP),
+            Weight_Lbs = mean(Weight_Lbs),
+            Height_Inches = mean(Height_Inches),
+            BMI_kgm2 = mean(BMI_kgm2)
+  )
 omr_patient
-
-print(omr_patient)
-
-admissions
-
-
+  
+omr_patient
