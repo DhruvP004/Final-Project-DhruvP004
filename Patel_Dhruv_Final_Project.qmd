@@ -26,3 +26,89 @@ from: markdown+emoji
 
 :::
 
+**Data Cleaning and Variable Selection**
+
+I started by loading and examining two key datasets: admissions.csv and omr.csv. The admissions dataset contains information about patient admissions, while the omr dataset includes various vital sign measurements. I conducted a thorough examination of missing variables in the admissions dataset, identifying key variables such as death time, ED registration/exit times, discharge location, marital status, and admission location with varying degrees of missingness.
+
+In the omr dataset, I expanded the result_name variable to extract different vitals as separate variables. However, I noticed a significant percentage of missingness for height, eGFR, weight, and blood pressure variables, prompting the decision to remove them. I also simplified the blood pressure measurements by seperating them into systolic and diastolic but also removing any of the extra specific to how it was measured blood pressure values.
+
+**Data Transformation and Integration**
+
+To achieve a single value for each vital sign for each patient, I transformed the omr dataset by converting vital sign measurements from characters to numerical values and then calculating the mean for each patient. The resulting omr_patient dataset was then merged with the admissions dataset using a right join, creating the admissions_omr dataset with average vital sign values for each patient. The integration of the admissions and omr datasets has allowed me to create a consolidated dataset, admissions_omr, with average vital sign values for each patient and other general data for each patient.
+
+**Univariate Analysis**
+
+I performed univariate analyses on key variables, including systolic and diastolic blood pressure, weight, height, and BMI. The distributions of these variables were visualized using histograms, revealing insights such as the normal ranges, potential data entry errors in weight and BMI, and the need for further data cleaning by removing extreme outliers.
+
+![diastolic_bp](plots/ua-diastolic-plot.png)
+
+Systolic Blood Pressure
+The univariate analysis of systolic blood pressure (SBP) revealed a unimodal distribution with no skewness, centering around 120. The general range of SBP for patients at Beth Israel Medical Center spans from 50 to 200 mmHg. The distribution is visualized in the histogram below:
+
+![systolic_bp](plots/ua-systolic-plot.png)
+
+Diastolic Blood Pressure
+Similarly, diastolic blood pressure (DBP) exhibited a unimodal distribution with a center around 80 and a general range between 30 and 130 mmHg. The distribution is symmetrical and displayed in the histogram.
+
+![weight](plots/ua-weight-plot.png)
+
+Weight
+Upon initial inspection of weight data, abnormal observations were identified, possibly due to data entry errors. To address this, weights exceeding 500 lbs were removed. The resulting unimodal distribution of weight centered around 180 lbs, with a slight right skew. The general weight range for patients was observed to be between 60 and 400 lbs.
+
+![height](plots/ua-height-plot.png)
+
+Height
+The distribution of height showed a unimodal pattern with no skewness, centered around 65 inches. The general range for height among patients was between 50 and 80 inches.
+
+![bmi](plots/ua-bmi-plot.png)
+
+Body Mass Index (BMI)
+Anomalies in BMI data, potentially stemming from data entry errors, were addressed by removing values exceeding 400. The resulting unimodal distribution of BMI centered around 30, exhibiting a slight right skew. The general range for BMI among patients spanned from 10 to 75 kg/m^2.
+
+**Bivariate Analysis**
+
+Bivariate analyses were conducted to explore relationships between vital sign measurements. I examined the correlation between numeric variables, revealing low correlation values overall. Notable correlations included diastolic and systolic blood pressure, weight and BMI, and weight and height.
+
+--
+
+A correlation table was generated to assess numeric relationships among variables. Notable findings include a correlation of 0.432 between diastolic and systolic blood pressure, highlighting a moderate positive correlation. Additionally, a strong positive correlation of 0.877 was observed between weight and BMI, as expected due to the integral role of weight in BMI calculations. Weight and height exhibited a correlation of 0.441.
+
+I also created scatter plots to visually explore relationships, such as the correlation between systolic and diastolic blood pressure and the relationships between weight and height, weight and BMI. These visualizations provide an initial understanding of the patterns within the data.
+
+![bp](plots/ba-bp-plot.png)
+
+Systolic and Diastolic Blood Pressure
+A bivariate scatter plot demonstrated the relationship between systolic and diastolic blood pressure, revealing a positive linear correlation. The regression line further emphasized the association between these two vital signs.
+
+![weight_height](plots/ba-weight-height-plot.png)
+
+Weight and Height
+The bivariate analysis of weight and height showcased a positive linear relationship, with the scatter plot and regression line illustrating the correlation between these measures.
+
+![weight_bmi](plots/ba-weight-bmi-plot.png)
+
+Weight and BMI
+Exploring the relationship between weight and BMI revealed a strong positive correlation, as evidenced by the scatter plot and regression line. This aligns with the expected influence of weight on BMI calculations.
+
+**Exploring Demographic Variations**
+
+To understand how vital signs vary across different demographic groups, I conducted bivariate analyses for insurance, language, marital status, and ethnicity against BMI. Boxplots were used to illustrate the distributions, revealing potential variations in BMI across these demographic categories.
+
+![insurance_bmi](plots/ba-insurance-bmi-plot.png)
+
+![language_bmi](plots/ba-language-bmi-plot.png)
+![marriage_bmi](plots/ba-marriage-bmi-plot.png)
+![ethnicity_bmi](plots/ba-ethnicity-bmi-plot.png)
+
+
+**Next Steps, Guiding Curiosities, and Research Questions**
+
+Moving forward, my next steps involve more in-depth exploration of demographic variations in vital signs. I plan to conducting additional statistical tests to assess the significance of observed differences across different demographic groups. My guiding curiosity revolves around understanding how factors such as insurance, language, marital status, and ethnicity may influence BMI and overall health outcomes. Exploring these relationships will contribute to a more nuanced understanding of patient health disparities within the Beth Israel Medical Center population.
+
+Additionally, I recognize the need for continuous refinement of my data cleaning process to ensure the robustness of our analyses. Addressing outliers and anomalies will be a priority to enhance the accuracy of my findings. 
+
+I intend to explore advanced statistical techniques to uncover intricate patterns within the data. My goal is to showcase my proficiency by creating new variables through mathematical operations and manipulating strings. Additionally, I plan to demonstrate my programming skills by designing and implementing functions.
+
+Working with time variables presents another exciting avenue for data analysis. By leveraging the temporal information provided, I aim to enhance the depth of our analysis. This involves extracting ages from birthdates, providing a more nuanced understanding of the dataset. Moreover, incorporating admission and discharge dates and times will allow for a more comprehensive exploration of patient trajectories.
+
+To lay the groundwork for these advanced analyses, my immediate focus is on conducting a more robust analysis of existing variables. This involves a combination of numerical analysis and visual graph analysis. Furthermore, I plan to explore variables in greater detail by grouping them into subsections. This refined approach aims to uncover subtler correlational relationships, moving beyond simple conclusions. Through these efforts, I seek to elevate the sophistication of our analysis and provide a more comprehensive understanding of the dataset.
