@@ -152,11 +152,14 @@ miss_var_summary(admissions_omr)
 
 # Univariate analysis of systolic blood pressure
 # unimodal, no skew, center around 120, general range between 50-200
-admissions_omr |>  ggplot(mapping = aes(x = systolic_bp)) +
+ua_systolic_plot <- admissions_omr |>  ggplot(mapping = aes(x = systolic_bp)) +
   geom_histogram(color = "white", fill = "royalblue4") +
   labs(title = "The Distribution of Systolic Blood Pressure",
        subtitle = "For patients at the Beth Isreal Medical Center",
        x = "Systolic Blood Pressure")
+ggsave(filename = "ua-systolic-plot.png", 
+       path = "/Users/dhruvpatel/Desktop/Stat301/final-project/Final-Project-DhruvP004/Plots",
+       plot = ua_systolic_plot)
 
 # unimodal, no skew, center around 80, general range between 30-130
 admissions_omr |>  ggplot(mapping = aes(x = diastolic_bp)) +
