@@ -1,0 +1,103 @@
+---
+title: "Progress Memo 1"
+subtitle: |
+  | Final Project 
+  | Data Science 1 with R (STAT 301-1)
+author: "Dhruv Patel"
+date: 10/29/23
+
+format:
+  html:
+    toc: true
+    embed-resources: true
+    
+execute:
+  echo: false
+  warning: false
+
+from: markdown+emoji 
+---
+
+::: {.callout-tip icon=false}
+
+## Github Repo Link
+
+[Github Repo Link](https://github.com/DhruvP004/Final-Project-DhruvP004.git)
+
+:::
+
+::: {.callout-warning}
+GitHub (free account) cannot store large files and therefore my files: admissions.csv, d_icd_diagnoses.csv, diagnoses_icd.csv, and omr.csv have been added to the `.gitignore` file before committing.
+:::
+
+## Data source
+
+```{r}
+library(tidyverse)
+admissions <- read_csv("data/admissions.csv")
+admissions
+
+icd <- read_csv("data/d_icd_diagnoses.csv")
+icd
+
+diagnoses <- read_csv("data/diagnoses_icd.csv")
+diagnoses
+
+omr <- read_csv("data/omr.csv")
+omr
+```
+
+The Medical Information Mart for Intensive Care (MIMIC IV)^[[MIMIC IV](https://physionet.org/content/mimiciv/2.2/hosp/#files-panel)]
+ data base which encompasses data from over 40,000 patients admitted to the intensive care units at the Beth Israel Deaconess Medical Center (BIDMS) between 2008 and 2019. Patient identifiers were eliminated from the database to comply with the Health Insurance Portability and Accountability Act (HIPAA) regulations, replaced by a random cipher, thereby providing de-identified integer identifiers for each patient. My focus primarily revolves around datasets derived from the hospital-wide Electronic Health Record (EHR). To work with the data effectively, I intend to merge various datasets, particularly those relating to admissions, diagnosis, and outcomes. Fortunately, I possess a unique key that allows me to match and associate the data with specific patients, given the consistent de-identified integer IDs across all datasets.
+
+## Why this data
+
+I am currently a pre-med student focusing on biology and Global health. Delving into the realm of data science, I've chosen to work with a healthcare data set. This decision aligns with my interests and background, allowing me to comprehend expected results and grasp the significance of various variables and medical terminologies.
+
+To procure a suitable data set, I reached out to various professionals, including physicians, healthcare administrators, and professors at the Feinberg School of Medicine with affiliations to the Center for Medical Education and Digital Healthcare and Data Science. After multiple exchanges, I received recommendations for the MIMIC IV database. Not only is this data set comprehensive, but it also serves as an industry standard, facilitating numerous data analytic and research projects aimed at enhancing patient care through knowledge discovery and algorithm development.
+
+Some of the inital general questions that I wanted to explore using this dataset are:
+
+1. What are the most common reasons for hospitalizations in the specified time frame, and are there any noticeable trends or changes in these patterns over the years?
+2. Is it possible identify any specific risk factors or comorbidities that frequently lead to extended hospital stays or readmissions?
+3. Are there any discernible differences in the treatment outcomes or lengths of hospital stay for patients with similar conditions but different insurance types?
+4. Is there a correlation between the length of hospital stay and the likelihood of subsequent readmissions?
+
+## Data quality & complexity check
+
+```{r}
+library(naniar)
+miss_var_summary(admissions)
+miss_var_summary(diagnoses)
+miss_var_summary(omr)
+```
+
+The admissions dataset contains a total of 542,520 observations and encompasses 15 variables. These variables include subject ID, Hospital admission ID, admit time, Discharge time, Death time, admission type, Admission location, discharge location, Insurance, language, marital status, ethnicity, ED registration time, ED exit time, and hospital expire flag. Of the 15 variables, nine are numerical, while the remaining six are categorical in nature.
+
+Moving on to the diagnosis dataset, it comprises a total of 4,677,924 observations. Additionally, this dataset is accompanied by another dataset that provides the code and corresponding disease classification. The diagnosis dataset includes 5 variables, namely subject ID, hospital admission ID, sequence number, disease code, and disease version. Notably, all five variables within this dataset are numerical.
+
+Lastly, the Online Medical Registry (omr) dataset consists of 6,439,169 observations and features 5 variables. These variables encompass subject ID, chart date, sequence number, result name, and result value. Out of these variables, four are numerical, while one is categorical.
+
+There are some instances of missing data within the admissions dataset, while both the diagnosis and OMR datasets show no signs of missing values. Notably, the admissions dataset exhibits 98.21627% missing death times, 40.48425% missing ED registration times, and 40.48425% missing ED exit times. This pattern can be reasonably anticipated, considering that not all admitted patients pass away in the hospital, and not every patient is admitted through the Emergency Department. Elective hospital admissions can also contribute to the absence of ED-related information.
+
+Moreover, the absence of ED times should not significantly impact the analysis, as these variables are not within the primary scope of my investigation. However, within the admissions dataset, there is also a notable 24.24750% of observations with missing discharge location, 12.60829% missing marital status, and 11.52234% missing admission location. While the missingness of some variables remains puzzling, particularly the marital status, I currently do not anticipate this issue significantly affecting the overall dataset. These variables, with the exception of marital status, are not central to my primary research interests. Nevertheless, I plan to delve deeper into understanding the missing data for the marital status variable.
+
+## Potential data issues
+
+Given the expansive nature of the dataset, I recognize the need to focus on specific sections of the data for my analysis. To achieve this, I plan to apply predefined parameters to filter out observations that do not align with the predetermined criteria set at the beginning of the project. Additionally, I intend to select a set of pertinent variables for in-depth analysis. As of now, the variables that appear most relevant include subject ID, admit time, discharge time, death time, admission type, insurance, language, marital status, ethnicity, disease code, disease version, sequence number, result name, and result value. Moreover, I am contemplating a more targeted approach to my data analysis, possibly centering it around a specific subgroup of diseases, such as cardiac diagnoses and if I choose this route I will adjust my questions of interest accordingly.
+
+One potential challenge that I foresee during the data merging process is the existence of multiple observations for each unique patient ID within the admissions, diagnoses, and OMR datasets. Resolving this issue will require me to develop strategies to organize and tidy the data effectively.
+
+However, I view this as an opportunity to showcase and enhance my data wrangling skills. Intuitively, I understand that encountering multiple observations for a single patient is a common occurrence within healthcare datasets. Mastering the skill of managing such complexities is crucial, especially if I aim to make significant contributions in the digital healthcare domain.
+
+## Works Cited
+(Required in agreement to use data)
+
+**MIMIC IV**
+Johnson, A., Bulgarelli, L., Pollard, T., Horng, S., Celi, L. A., & Mark, R. (2023). MIMIC-IV (version 2.2). PhysioNet. [https://doi.org/10.13026/6mm1-ek67.](https://doi.org/10.13026/6mm1-ek67)
+
+**Original Publication**
+Johnson, A.E.W., Bulgarelli, L., Shen, L. et al. MIMIC-IV, a freely accessible electronic health record dataset. Sci Data 10, 1 (2023). [https://doi.org/10.1038/s41597-022-01899-x](https://doi.org/10.1038/s41597-022-01899-x)
+
+**PhysioNet** 
+Goldberger, A., Amaral, L., Glass, L., Hausdorff, J., Ivanov, P. C., Mark, R., ... & Stanley, H. E. (2000). PhysioBank, PhysioToolkit, and PhysioNet: Components of a new research resource for complex physiologic signals. Circulation [Online]. 101 (23), pp. e215–e220.

@@ -112,3 +112,15 @@ I intend to explore advanced statistical techniques to uncover intricate pattern
 Working with time variables presents another exciting avenue for data analysis. By leveraging the temporal information provided, I aim to enhance the depth of our analysis. This involves extracting ages from birthdates, providing a more nuanced understanding of the dataset. Moreover, incorporating admission and discharge dates and times will allow for a more comprehensive exploration of patient trajectories.
 
 To lay the groundwork for these advanced analyses, my immediate focus is on conducting a more robust analysis of existing variables. This involves a combination of numerical analysis and visual graph analysis. Furthermore, I plan to explore variables in greater detail by grouping them into subsections. This refined approach aims to uncover subtler correlational relationships, moving beyond simple conclusions. Through these efforts, I seek to elevate the sophistication of our analysis and provide a more comprehensive understanding of the dataset.
+
+## Works Cited
+(Required in agreement to use data)
+
+**MIMIC IV**
+Johnson, A., Bulgarelli, L., Pollard, T., Horng, S., Celi, L. A., & Mark, R. (2023). MIMIC-IV (version 2.2). PhysioNet. [https://doi.org/10.13026/6mm1-ek67.](https://doi.org/10.13026/6mm1-ek67)
+
+**Original Publication**
+Johnson, A.E.W., Bulgarelli, L., Shen, L. et al. MIMIC-IV, a freely accessible electronic health record dataset. Sci Data 10, 1 (2023). [https://doi.org/10.1038/s41597-022-01899-x](https://doi.org/10.1038/s41597-022-01899-x)
+
+**PhysioNet** 
+Goldberger, A., Amaral, L., Glass, L., Hausdorff, J., Ivanov, P. C., Mark, R., ... & Stanley, H. E. (2000). PhysioBank, PhysioToolkit, and PhysioNet: Components of a new research resource for complex physiologic signals. Circulation [Online]. 101 (23), pp. e215–e220.
